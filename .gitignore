@@ -10,6 +10,10 @@ learning_track/
 # Dependencies
 node_modules/
 
+# Logs
+logs/
+*.log
+
 # Environment Variables
 .env
 .env.local
