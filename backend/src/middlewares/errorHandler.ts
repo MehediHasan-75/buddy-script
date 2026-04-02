@@ -1,6 +1,7 @@
 import { Request, Response, NextFunction } from 'express';
 import { AppError } from '@utils/errors';
 import { logger } from '@config/logger';
+import { env } from '@config/environment';
 
 export function errorHandler(
   err: Error | AppError,
@@ -21,7 +22,7 @@ export function errorHandler(
     path: req.originalUrl,
     method: req.method,
     statusCode,
-    stack: process.env.NODE_ENV === 'development' ? err.stack : undefined,
+    stack: env.nodeEnv === 'development' ? err.stack : undefined,
   });
 
   return res.status(statusCode).json({
