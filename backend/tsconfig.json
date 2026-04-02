@@ -12,7 +12,8 @@
       "@controllers/*": ["controllers/*"],
       "@models/*": ["models/*"],
       "@utils/*": ["utils/*"],
-      "@types/*": ["types/*"]
+      "@types/*": ["types/*"],
+      "@constants/*": ["constants/*"]
     },
 
     // Environment Settings
