@@ -4,15 +4,18 @@ dotenv.config();
 
 export const env = {
     port: Number(process.env.PORT) || 8000,
-    mongoUri: process.env.MONGODB_URI || '',
+    databaseUrl: process.env.DATABASE_URL || '',
     jwtSecret: process.env.JWT_SECRET || '',
-    jwtExpiresIn: process.env.JWT_EXPIRES_IN || '24h',
+    jwtExpiresIn: process.env.JWT_EXPIRES_IN || '15m',
     refreshTokenSecret: process.env.REFRESH_TOKEN_SECRET || '',
     refreshTokenExpiresIn: process.env.REFRESH_TOKEN_EXPIRES_IN || '7d',
     cloudinary: {
         cloudName: process.env.CLOUDINARY_CLOUD_NAME || '',
         apiKey: process.env.CLOUDINARY_API_KEY || '',
         apiSecret: process.env.CLOUDINARY_API_SECRET || '',
+    },
+    redis: {
+        url: process.env.REDIS_URL || 'redis://localhost:6379',
     },
     clientUrl: process.env.CLIENT_URL || 'http://localhost:3000',
     nodeEnv: process.env.NODE_ENV || 'development',
@@ -23,7 +26,8 @@ export const env = {
 
 export const validateEnv = () => {
     const required = [
-        'MONGODB_URI',
+        'DATABASE_URL',
+        'REDIS_URL',
         'JWT_SECRET',
         'CLOUDINARY_CLOUD_NAME',
         'CLOUDINARY_API_KEY',
