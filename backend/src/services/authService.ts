@@ -45,7 +45,7 @@ const register = async (data: {
   password: string;
 }) => {
   const existing = await User.findOne({ email: data.email });
-  if (existing) throw AppError.conflict('An account with this email already exists');
+  if (existing) throw AppError.conflict('Registration failed. Please check your details and try again.');
 
   const passwordHash = await bcrypt.hash(data.password, BCRYPT_ROUNDS);
   const user = await User.create({

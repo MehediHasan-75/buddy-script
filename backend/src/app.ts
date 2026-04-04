@@ -14,7 +14,7 @@ import { errorHandler } from '@middlewares/errorHandler';
 import { logger } from '@config/logger';
 import { AppError } from '@utils/errors';
 import { globalLimiter, initializeRateLimiters } from '@middlewares/rateLimiter';
-
+import routes from '@routes/index';
 
 validateEnv();
 
@@ -44,7 +44,7 @@ app.use(compression());
 app.use(requestLogger);
 
 // ROUTES
-// app.use('/api/v1', routes);
+app.use('/api/v1', routes);
 
 // HEALTH CHECK
 app.get('/health', (_req, res) => {
@@ -115,6 +115,15 @@ export async function startServer() {
     server = app.listen(env.port, () =>
       logger.info(`Server running on http://localhost:${env.port} [${env.nodeEnv}]`)
     );
+
+    server.on('error', (err: NodeJS.ErrnoException) => {
+      if (err.code === 'EADDRINUSE') {
+        logger.error(`Port ${env.port} is already in use. Stop the other process or set a different PORT in .env`);
+      } else {
+        logger.error('Server error', { error: err.message });
+      }
+      process.exit(1);
+    });
   } catch (error) {
     logger.error('Failed to start server', { error });
     process.exit(1);

@@ -4,27 +4,24 @@
     // File Layout
     "rootDir": "./src",
     "outDir": "./dist",
-    "baseUrl": "./src",
     "paths": {
-      "@config/*": ["config/*"],
-      "@middlewares/*": ["middlewares/*"],
-      "@routes/*": ["routes/*"],
-      "@controllers/*": ["controllers/*"],
-      "@models/*": ["models/*"],
-      "@utils/*": ["utils/*"],
-      "@types/*": ["types/*"],
-      "@constants/*": ["constants/*"]
+      "@config/*":      ["./src/config/*"],
+      "@middlewares/*": ["./src/middlewares/*"],
+      "@routes/*":      ["./src/routes/*"],
+      "@controllers/*": ["./src/controllers/*"],
+      "@services/*":    ["./src/services/*"],
+      "@models/*":      ["./src/models/*"],
+      "@utils/*":       ["./src/utils/*"],
+      "@validators/*":  ["./src/validators/*"],
+      "@types/*":       ["./src/types/*"],
+      "@constants/*":   ["./src/constants/*"]
     },
 
     // Environment Settings
-    // See also https://aka.ms/tsconfig/module
     "module": "commonjs",
     "target": "esnext",
-    "types": [],
-    // For nodejs:
-    // "lib": ["esnext"],
-    // "types": ["node"],
-    // and npm install -D @types/node
+    "lib": ["esnext"],
+    "types": ["node"],
 
     // Other Outputs
     "sourceMap": true,
@@ -50,6 +47,6 @@
     "isolatedModules": true,
     "noUncheckedSideEffectImports": true,
     "moduleDetection": "force",
-    "skipLibCheck": true,
+    "skipLibCheck": true
   }
 }
