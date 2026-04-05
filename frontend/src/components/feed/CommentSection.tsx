@@ -11,9 +11,10 @@ const PREVIEW_COUNT = 2;
 interface CommentSectionProps {
   postId: string;
   currentUser: User;
+  isDark?: boolean;
 }
 
-export function CommentSection({ postId, currentUser }: CommentSectionProps) {
+export function CommentSection({ postId, currentUser, isDark = false }: CommentSectionProps) {
   const { commentsQuery, createComment, deleteComment, createReply, deleteReply } =
     useComments(postId, true);
   const [showAll, setShowAll] = useState(false);
@@ -31,7 +32,7 @@ export function CommentSection({ postId, currentUser }: CommentSectionProps) {
 
       <div className="_timline_comment_main">
         {commentsQuery.isLoading && (
-          <p style={{ textAlign: 'center', padding: 12, color: '#888', fontSize: 'clamp(12px, 2vw, 13px)' }}>
+          <p style={{ textAlign: 'center', padding: 12, color: isDark ? '#aaa' : '#888', fontSize: 'clamp(12px, 2vw, 13px)' }}>
             Loading comments...
           </p>
         )}

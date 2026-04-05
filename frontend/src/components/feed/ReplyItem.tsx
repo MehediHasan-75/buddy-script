@@ -72,6 +72,7 @@ export function ReplyItem({ reply, postId, commentId, currentUser, onDelete, del
               </div>
               <button
                 onClick={() => setShowLikesModal(true)}
+                className="_secondary_text_btn"
                 style={{ background: 'none', border: 'none', cursor: 'pointer', padding: 0, fontSize: 'clamp(10px, 1.5vw, 11px)', color: '#666', marginLeft: 3 }}
               >
                 {reply.likesCount}

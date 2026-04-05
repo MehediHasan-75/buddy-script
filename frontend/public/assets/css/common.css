@@ -2144,3 +2144,43 @@ ul {
 /*::-webkit-scrollbar-thumb:hover {
   background: #555;
 }
+
+/* Dark Mode Text Colors */
+._dark_wrapper ._secondary_text_btn,
+._dark_wrapper ._secondary_text_btn:visited {
+  color: #b3b3b3 !important;
+}
+
+/* All text in dark mode for better readability */
+._dark_wrapper ._feed_inner_timeline_total_reacts_para1,
+._dark_wrapper ._feed_inner_timeline_total_reacts_para1 button {
+  color: #b3b3b3 !important;
+}
+
+._dark_wrapper ._comment_actions button,
+._dark_wrapper ._reply_actions button {
+  color: #b3b3b3 !important;
+}
+
+/* Like count text in dark mode */
+._dark_wrapper ._avatar_stack_text {
+  color: #b3b3b3 !important;
+}
+
+/* Comment and reply text */
+._dark_wrapper ._comment_text,
+._dark_wrapper ._reply_text,
+._dark_wrapper ._feed_inner_timeline_total_reacts {
+  color: #e0e0e0 !important;
+}
+
+/* Timestamp and meta text */
+._dark_wrapper ._feed_inner_timeline_post_box_para,
+._dark_wrapper ._time_text {
+  color: #b3b3b3 !important;
+}
+
+/* Make sure post action buttons are visible in dark mode */
+._dark_wrapper ._ feed_reaction {
+  color: #e0e0e0;
+}

@@ -16,9 +16,10 @@ import type { Post, User } from '@/types';
 interface PostCardProps {
   post: Post;
   currentUser: User;
+  isDark?: boolean;
 }
 
-export function PostCard({ post, currentUser }: PostCardProps) {
+export function PostCard({ post, currentUser, isDark = false }: PostCardProps) {
   const queryClient = useQueryClient();
   const [showComments, setShowComments] = useState(false);
   const [dropdownOpen, setDropdownOpen] = useState(false);
@@ -133,6 +134,7 @@ export function PostCard({ post, currentUser }: PostCardProps) {
                 totalCount={post.likesCount}
                 maxVisible={3}
                 onViewAll={() => setShowLikesModal(true)}
+                isDark={isDark}
               />
             </>
           )}
@@ -141,7 +143,8 @@ export function PostCard({ post, currentUser }: PostCardProps) {
           <p className="_feed_inner_timeline_total_reacts_para1">
             <button
               type="button"
-              style={{ background: 'none', border: 'none', cursor: 'pointer', fontSize: 'clamp(12px, 2vw, 13px)', color: '#666', padding: 0 }}
+              className="_secondary_text_btn"
+              style={{ background: 'none', border: 'none', cursor: 'pointer', fontSize: 'clamp(12px, 2vw, 13px)', color: isDark ? '#aaa' : '#666', padding: 0 }}
               onClick={() => setShowComments(p => !p)}
             >
               <span style={{ fontWeight: 600 }}>{post.commentsCount}</span> Comment{post.commentsCount !== 1 ? 's' : ''}
@@ -204,7 +207,7 @@ export function PostCard({ post, currentUser }: PostCardProps) {
         </button>
       </div>
 
-      {showComments && <CommentSection postId={post.id} currentUser={currentUser} />}
+      {showComments && <CommentSection postId={post.id} currentUser={currentUser} isDark={isDark} />}
 
       <LikesModal
         isOpen={showLikesModal}

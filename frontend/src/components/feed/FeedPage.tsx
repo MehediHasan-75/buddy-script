@@ -141,7 +141,7 @@ export function FeedPage() {
                     </div>
 
                   <PostComposer currentUser={currentUser} isDark={isDark} />
-                    <PostList currentUser={currentUser} />
+                    <PostList currentUser={currentUser} isDark={isDark} />
                   </div>
                 </div>
               </div>

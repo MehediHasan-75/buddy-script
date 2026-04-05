@@ -88,6 +88,7 @@ export function CommentItem({
               </div>
               <button
                 onClick={() => setShowLikesModal(true)}
+                className="_secondary_text_btn"
                 style={{ background: 'none', border: 'none', cursor: 'pointer', padding: 0, fontSize: 'clamp(11px, 1.5vw, 12px)', color: '#666', marginLeft: 4 }}
               >
                 {comment.likesCount}

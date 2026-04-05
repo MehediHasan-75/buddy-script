@@ -9,6 +9,7 @@ interface AvatarStackProps {
   totalCount: number;
   maxVisible?: number;
   onViewAll?: () => void;
+  isDark?: boolean;
 }
 
 export function AvatarStack({
@@ -16,6 +17,7 @@ export function AvatarStack({
   totalCount,
   maxVisible = 3,
   onViewAll,
+  isDark = false,
 }: AvatarStackProps) {
   const [overlapPx, setOverlapPx] = useState(20);
 
@@ -45,6 +47,8 @@ export function AvatarStack({
         alignItems: 'center',
         gap: 'clamp(6px, 2vw, 8px)',
         cursor: onViewAll ? 'pointer' : 'default',
+        position: 'relative',
+        zIndex: 'auto',
       }}
       onClick={onViewAll}
     >
@@ -123,11 +127,12 @@ export function AvatarStack({
           e.stopPropagation();
           onViewAll?.();
         }}
+        className="_secondary_text_btn"
         style={{
           background: 'none',
           border: 'none',
           cursor: onViewAll ? 'pointer' : 'default',
-          color: '#666',
+          color: isDark ? '#aaa' : '#666',
           fontSize: 'clamp(12px, 2vw, 13px)',
           padding: 0,
           fontWeight: 500,

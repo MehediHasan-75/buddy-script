@@ -7,9 +7,10 @@ import type { User } from '@/types';
 
 interface PostListProps {
   currentUser: User;
+  isDark?: boolean;
 }
 
-export function PostList({ currentUser }: PostListProps) {
+export function PostList({ currentUser, isDark = false }: PostListProps) {
   const { data, isLoading, isError, isFetchingNextPage, hasNextPage, fetchNextPage, refetch } = useInfinitePosts();
   const sentinelRef = useRef<HTMLDivElement>(null);
 
@@ -32,7 +33,7 @@ export function PostList({ currentUser }: PostListProps) {
     return (
       <div className="_feed_inner_timeline_post_area _b_radious6 _padd_b24 _padd_t24 _mar_b16"
         style={{ textAlign: 'center', padding: 48 }}>
-        <p style={{ color: '#888', fontSize: 16, marginBottom: 16 }}>Failed to load posts.</p>
+        <p style={{ color: isDark ? '#aaa' : '#888', fontSize: 16, marginBottom: 16 }}>Failed to load posts.</p>
         <button
           type="button"
           className="btn btn-primary"
@@ -75,7 +76,7 @@ export function PostList({ currentUser }: PostListProps) {
     return (
       <div className="_feed_inner_timeline_post_area _b_radious6 _padd_b24 _padd_t24 _mar_b16"
         style={{ textAlign: 'center', padding: 48 }}>
-        <p style={{ color: '#888', fontSize: 16 }}>Be the first to post something!</p>
+        <p style={{ color: isDark ? '#aaa' : '#888', fontSize: 16 }}>Be the first to post something!</p>
       </div>
     );
   }
@@ -83,7 +84,7 @@ export function PostList({ currentUser }: PostListProps) {
   return (
     <>
       {posts.map(post => (
-        <PostCard key={post.id} post={post} currentUser={currentUser} />
+        <PostCard key={post.id} post={post} currentUser={currentUser} isDark={isDark} />
       ))}
       <div ref={sentinelRef} style={{ height: 1 }} />
       {isFetchingNextPage && (
