@@ -8,7 +8,9 @@ import { Avatar } from '@/components/ui/Avatar';
 import { Modal } from '@/components/ui/Modal';
 import { CommentSection } from './CommentSection';
 import { LikesModal } from './LikesModal';
+import { AvatarStack } from './AvatarStack';
 import { useLike } from '@/hooks/useLike';
+import { useLikers } from '@/hooks/useLikers';
 import type { Post, User } from '@/types';
 
 interface PostCardProps {
@@ -23,6 +25,7 @@ export function PostCard({ post, currentUser }: PostCardProps) {
   const [showDeleteModal, setShowDeleteModal] = useState(false);
   const [showLikesModal, setShowLikesModal] = useState(false);
   const likeMutation = useLike();
+  const { data: likersData } = useLikers('post', post.id, 3);
 
   const timeAgo = (() => {
     try {
@@ -125,17 +128,12 @@ export function PostCard({ post, currentUser }: PostCardProps) {
         <div className="_feed_inner_timeline_total_reacts_image" style={{ display: 'flex', alignItems: 'center', gap: 6 }}>
           {post.likesCount > 0 && (
             <>
-              <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="#E0245E" stroke="none">
-                <path d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
-              </svg>
-              <p className="_feed_inner_timeline_total_reacts_para">{post.likesCount}</p>
-              <button
-                onClick={() => setShowLikesModal(true)}
-                style={{ background: 'none', border: 'none', cursor: 'pointer', padding: 0 }}
-                className="_feed_inner_timeline_total_reacts_para"
-              >
-                {post.likesCount}
-              </button>
+              <AvatarStack
+                likers={likersData?.likers || []}
+                totalCount={post.likesCount}
+                maxVisible={3}
+                onViewAll={() => setShowLikesModal(true)}
+              />
             </>
           )}
         </div>

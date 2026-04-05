@@ -1,9 +1,12 @@
+import { CSSProperties } from 'react';
+
 interface AvatarProps {
   avatarUrl: string | null;
   firstName: string;
   lastName: string;
   size?: number;
   className?: string;
+  style?: CSSProperties;
 }
 
 const COLORS = [
@@ -17,7 +20,7 @@ function getColor(name: string): string {
   return COLORS[Math.abs(hash) % COLORS.length];
 }
 
-export function Avatar({ avatarUrl, firstName, lastName, size = 40, className = '' }: AvatarProps) {
+export function Avatar({ avatarUrl, firstName, lastName, size = 40, className = '', style = {} }: AvatarProps) {
   const initials = `${firstName[0] ?? ''}${lastName[0] ?? ''}`.toUpperCase();
   const bg = getColor(firstName + lastName);
 
@@ -30,7 +33,7 @@ export function Avatar({ avatarUrl, firstName, lastName, size = 40, className = 
         width={size}
         height={size}
         className={className}
-        style={{ borderRadius: '50%', objectFit: 'cover', width: size, height: size }}
+        style={{ borderRadius: '50%', objectFit: 'cover', width: size, height: size, ...style }}
       />
     );
   }
@@ -50,6 +53,7 @@ export function Avatar({ avatarUrl, firstName, lastName, size = 40, className = 
         fontWeight: 600,
         fontSize: size * 0.4,
         flexShrink: 0,
+        ...style,
       }}
     >
       {initials}
