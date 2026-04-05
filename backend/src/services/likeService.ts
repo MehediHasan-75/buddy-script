@@ -4,6 +4,7 @@ import { Post } from '@models/Post';
 import { Comment } from '@models/Comment';
 import { Reply } from '@models/Reply';
 import { LikeTarget } from '@validators/like';
+import { AppError } from '@utils/errors';
 import type { LeanLikeUser, LeanLike } from '../types/lean';
 
 export type { LikeTarget };
@@ -12,6 +13,15 @@ const DEFAULT_LIMIT = 20;
 
 const TARGET_MODELS = { post: Post, comment: Comment, reply: Reply } as const;
 
+/** Validate that targetId is a valid MongoDB ObjectId. */
+const validateObjectId = (id: string, label: string): Types.ObjectId => {
+  try {
+    return new Types.ObjectId(id);
+  } catch {
+    throw AppError.badRequest(`Invalid ${label} ID format`);
+  }
+};
+
 /** $inc likesCount on the correct model; returns the updated likesCount. */
 const updateCount = async (target: LikeTarget, targetId: string, inc: 1 | -1): Promise<number> => {
   // Cast to a common interface — all three models share likesCount
@@ -19,6 +29,9 @@ const updateCount = async (target: LikeTarget, targetId: string, inc: 1 | -1): P
   const doc = await model.findByIdAndUpdate(
     targetId, { $inc: { likesCount: inc } }, { new: true, select: 'likesCount' },
   );
+  if (!doc) {
+    throw AppError.notFound(`${target.charAt(0).toUpperCase() + target.slice(1)} not found`);
+  }
   return Math.max(0, (doc?.likesCount as number | undefined) ?? 0);
 };
 
@@ -27,7 +40,8 @@ const updateCount = async (target: LikeTarget, targetId: string, inc: 1 | -1): P
  * Returns the new liked state and the current count.
  */
 const toggle = async (userId: string, target: LikeTarget, targetId: string) => {
-  const filter = { user: userId, [target]: new Types.ObjectId(targetId) };
+  const objectId = validateObjectId(targetId, target);
+  const filter = { user: userId, [target]: objectId };
   const existing = await Like.findOneAndDelete(filter);
 
   if (existing) {
@@ -46,7 +60,8 @@ const toggle = async (userId: string, target: LikeTarget, targetId: string) => {
  * Cursor-paginated list of users who liked a target.
  */
 const getLikers = async (target: LikeTarget, targetId: string, cursor?: string, limit = DEFAULT_LIMIT) => {
-  const filter: Record<string, unknown> = { [target]: new Types.ObjectId(targetId) };
+  const objectId = validateObjectId(targetId, target);
+  const filter: Record<string, unknown> = { [target]: objectId };
   if (cursor) filter['createdAt'] = { $lt: new Date(cursor) };
 
   const likes = await Like
