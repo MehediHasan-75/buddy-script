@@ -4,8 +4,8 @@ export const createPostSchema = z.object({
   content: z
     .string()
     .trim()
-    .min(1, 'Post content cannot be empty')
-    .max(5000, 'Post content must be 5000 characters or less'),
+    .max(5000, 'Post content must be 5000 characters or less')
+    .optional(),
 
   imageUrl: z
     .string()
@@ -16,6 +16,12 @@ export const createPostSchema = z.object({
       error: "Visibility must be 'PUBLIC' or 'PRIVATE'",
     })
     .default('PUBLIC'),
-});
+}).refine(
+  (data) => data.content || data.imageUrl,
+  {
+    message: 'Post must have either content or an image',
+    path: ['content'],
+  }
+);
 
 export type CreatePostInput = z.infer<typeof createPostSchema>;

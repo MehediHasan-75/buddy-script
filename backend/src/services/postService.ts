@@ -83,11 +83,11 @@ const getFeed = async (userId: string, cursor?: string, limit = DEFAULT_LIMIT) =
 /** Create a post. */
 const createPost = async (
   authorId: string,
-  data: { content: string; imageUrl?: string | undefined; visibility?: 'PUBLIC' | 'PRIVATE' | undefined },
+  data: { content?: string | undefined; imageUrl?: string | undefined; visibility?: 'PUBLIC' | 'PRIVATE' | undefined },
 ) => {
   const post = await Post.create({
     author:     new Types.ObjectId(authorId),
-    content:    data.content,
+    content:    data.content ?? null,
     imageUrl:   data.imageUrl ?? null,
     visibility: data.visibility ?? 'PUBLIC',
   });

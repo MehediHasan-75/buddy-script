@@ -3,7 +3,7 @@ import { Schema, model } from 'mongoose';
 const PostSchema = new Schema(
   {
     author:        { type: Schema.Types.ObjectId, ref: 'User', required: true },
-    content:       { type: String, required: true, maxlength: 5000 },
+    content:       { type: String, required: false, maxlength: 5000, default: null },
     imageUrl:      { type: String, default: null },
     visibility:    { type: String, enum: ['PUBLIC', 'PRIVATE'], default: 'PUBLIC' },
     likesCount:    { type: Number, default: 0 },
