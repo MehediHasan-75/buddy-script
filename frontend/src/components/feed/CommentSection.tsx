@@ -20,7 +20,7 @@ export function CommentSection({ postId, currentUser }: CommentSectionProps) {
 
   const allComments = commentsQuery.data?.comments ?? [];
   const hiddenCount = Math.max(0, allComments.length - PREVIEW_COUNT);
-  const visibleComments = showAll ? allComments : allComments.slice(-PREVIEW_COUNT);
+  const visibleComments = showAll ? allComments : allComments.slice(0, PREVIEW_COUNT);
 
   return (
     <div className="_feed_inner_timeline_cooment_area">
@@ -44,6 +44,17 @@ export function CommentSection({ postId, currentUser }: CommentSectionProps) {
             style={{ display: 'block', marginBottom: 8 }}
           >
             View {hiddenCount} previous comment{hiddenCount !== 1 ? 's' : ''}
+          </button>
+        )}
+
+        {!commentsQuery.isLoading && hiddenCount > 0 && showAll && (
+          <button
+            type="button"
+            className="_previous_comment_txt"
+            onClick={() => setShowAll(false)}
+            style={{ display: 'block', marginBottom: 8 }}
+          >
+            Hide comments
           </button>
         )}
 
