@@ -1606,29 +1606,24 @@
     display: -webkit-box;
     display: -ms-flexbox;
     display: flex;
-    -webkit-box-align: start;
-        -ms-flex-align: start;
-            align-items: flex-start;
-    padding: 12px 15px;
+    -webkit-box-align: center;
+        -ms-flex-align: center;
+            align-items: center;
+    padding: 8px 15px;
     background: rgba(24, 144, 255, 0.05);
     border-radius: 0px 0px 6px 6px;
-    min-height: 64px;
-    height: auto;
+    min-height: 48px;
     margin: 10px 0 0 0;
     -webkit-box-pack: justify;
         -ms-flex-pack: justify;
             justify-content: space-between;
-    flex-wrap: wrap;
+    flex-wrap: nowrap;
     gap: 8px;
 }
 ._feed_inner_text_area_item {
     display: -webkit-box;
     display: -ms-flexbox;
     display: flex;
-    flex-wrap: wrap;
-    gap: 4px;
-    align-items: flex-start;
-    width: 100%;
 }
 ._feed_common {
     display: -webkit-box;
@@ -1653,8 +1648,8 @@
 }
 ._feed_inner_text_area_bottom_photo_link {
     font-weight: normal;
-    font-size: 16px;
-    line-height: 23px;
+    font-size: 13px;
+    line-height: 1.4;
     color: var(--color7);
     -webkit-transition:.2s all ease;
     -o-transition:.2s all ease;
@@ -1668,24 +1663,19 @@
     -webkit-box-align: center;
         -ms-flex-align: center;
             align-items: center;
+    padding: 0 6px;
+    white-space: nowrap;
 }
 ._feed_inner_text_area_bottom_photo_link:hover {
     color:var(--color5);
 }
 ._mar_img {
-    margin:0 8px 0 0;
-}
-._feed_inner_text_area_btn {
-    display: flex;
-    align-items: center;
-    margin-left: auto;
-    flex-shrink: 0;
-    margin-top: 4px;
+    margin: 0 4px 0 0;
 }
 ._feed_inner_text_area_btn_link {
     background: var(--color5);
     border-radius: 6px;
-    padding:12px 22px;
+    padding: 8px 16px;
     border:1px solid transparent;
     display: -webkit-box;
     display: -ms-flexbox;
@@ -1699,15 +1689,17 @@
     -webkit-transition:.2s all ease;
     -o-transition:.2s all ease;
     transition:.2s all ease;
+    flex-shrink: 0;
 }
 ._feed_inner_text_area_btn_link:hover {
     background:#377DFF;
 }
 ._feed_inner_text_area_btn_link span {
     font-weight: 500;
-    font-size: 16px;
-    line-height: 24px;
+    font-size: 14px;
+    line-height: 1.4;
     color: var(--bg2);
+    white-space: nowrap;
 }
 ._feed_inner_text_area_box_form {
     position: relative;
