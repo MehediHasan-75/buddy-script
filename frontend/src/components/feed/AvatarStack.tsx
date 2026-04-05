@@ -1,5 +1,6 @@
 'use client';
 
+import { useState, useEffect } from 'react';
 import { Avatar } from '@/components/ui/Avatar';
 import type { LikeUser } from '@/types';
 
@@ -16,6 +17,22 @@ export function AvatarStack({
   maxVisible = 3,
   onViewAll,
 }: AvatarStackProps) {
+  const [overlapPx, setOverlapPx] = useState(20);
+
+  // Calculate responsive overlap based on viewport width
+  useEffect(() => {
+    const calculateOverlap = () => {
+      if (typeof window === 'undefined') return;
+      // Desktop: 20px, Tablet: 16px, Mobile: 12px
+      const width = window.innerWidth;
+      setOverlapPx(width >= 1024 ? 20 : width >= 768 ? 16 : 12);
+    };
+
+    calculateOverlap();
+    window.addEventListener('resize', calculateOverlap);
+    return () => window.removeEventListener('resize', calculateOverlap);
+  }, []);
+
   if (totalCount === 0) return null;
 
   const visibleLikers = likers.slice(0, maxVisible);
@@ -26,7 +43,7 @@ export function AvatarStack({
       style={{
         display: 'flex',
         alignItems: 'center',
-        gap: '8px',
+        gap: 'clamp(6px, 2vw, 8px)',
         cursor: onViewAll ? 'pointer' : 'default',
       }}
       onClick={onViewAll}
@@ -37,7 +54,7 @@ export function AvatarStack({
           display: 'flex',
           alignItems: 'center',
           position: 'relative',
-          height: '32px',
+          height: 'clamp(24px, 5vw, 32px)',
           cursor: onViewAll ? 'pointer' : 'default',
         }}
         onClick={(e) => {
@@ -50,7 +67,7 @@ export function AvatarStack({
             key={liker.id}
             style={{
               position: 'absolute',
-              left: `${index * 20}px`,
+              left: `${index * overlapPx}px`,
               zIndex: visibleLikers.length - index,
             }}
           >
@@ -72,9 +89,9 @@ export function AvatarStack({
           <div
             style={{
               position: 'absolute',
-              left: `${visibleLikers.length * 20}px`,
-              width: '32px',
-              height: '32px',
+              left: `${visibleLikers.length * overlapPx}px`,
+              width: 'clamp(24px, 5vw, 32px)',
+              height: 'clamp(24px, 5vw, 32px)',
               borderRadius: '50%',
               backgroundColor: '#1890FF',
               border: '2px solid white',
@@ -83,7 +100,7 @@ export function AvatarStack({
               alignItems: 'center',
               justifyContent: 'center',
               color: 'white',
-              fontSize: '11px',
+              fontSize: 'clamp(9px, 2vw, 11px)',
               fontWeight: 'bold',
               zIndex: 0,
               cursor: onViewAll ? 'pointer' : 'default',
@@ -111,7 +128,7 @@ export function AvatarStack({
           border: 'none',
           cursor: onViewAll ? 'pointer' : 'default',
           color: '#666',
-          fontSize: '13px',
+          fontSize: 'clamp(12px, 2vw, 13px)',
           padding: 0,
           fontWeight: 500,
         }}

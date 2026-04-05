@@ -60,10 +60,10 @@ export function CommentItem({
         <div className="_comment_details">
           <div className="_comment_details_top">
             <div className="_comment_header">
-              <h4 className="_comment_name_title">
+              <h4 className="_comment_name_title" style={{ fontSize: 'clamp(12px, 2vw, 13px)' }}>
                 {comment.author.firstName} {comment.author.lastName}
               </h4>
-              <span style={{ color: '#999', fontSize: 12, marginLeft: 6 }}>· {timeAgo}</span>
+              <span style={{ color: '#999', fontSize: 'clamp(11px, 1.5vw, 12px)', marginLeft: 'clamp(4px, 1vw, 6px)' }}>· {timeAgo}</span>
             </div>
           </div>
           <div className="_comment_status">
@@ -88,7 +88,7 @@ export function CommentItem({
               </div>
               <button
                 onClick={() => setShowLikesModal(true)}
-                style={{ background: 'none', border: 'none', cursor: 'pointer', padding: 0, fontSize: 12, color: '#666', marginLeft: 4 }}
+                style={{ background: 'none', border: 'none', cursor: 'pointer', padding: 0, fontSize: 'clamp(11px, 1.5vw, 12px)', color: '#666', marginLeft: 4 }}
               >
                 {comment.likesCount}
               </button>
@@ -97,7 +97,7 @@ export function CommentItem({
 
           <div className="_comment_reply">
             <div className="_comment_reply_num">
-              <div style={{ display: 'flex', alignItems: 'center', gap: 6, fontSize: 12 }}>
+              <div style={{ display: 'flex', alignItems: 'center', gap: 'clamp(4px, 1.5vw, 6px)', fontSize: 'clamp(11px, 1.5vw, 12px)' }}>
                 <span
                   style={{ cursor: 'pointer', color: comment.userLiked ? '#E0245E' : '#555', fontWeight: 600 }}
                   onClick={() => likeMutation.mutate({ target: 'comment', targetId: comment.id, postId })}
@@ -139,7 +139,7 @@ export function CommentItem({
 
           {showReplies && (
             <div style={{ marginTop: 8 }}>
-              {repliesLoading && <p style={{ fontSize: 12, color: '#888' }}>Loading replies...</p>}
+              {repliesLoading && <p style={{ fontSize: 'clamp(11px, 1.5vw, 12px)', color: '#888' }}>Loading replies...</p>}
               {repliesData?.replies.map(reply => (
                 <ReplyItem
                   key={reply.id}

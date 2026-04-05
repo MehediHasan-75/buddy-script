@@ -31,7 +31,7 @@ export function CommentSection({ postId, currentUser }: CommentSectionProps) {
 
       <div className="_timline_comment_main">
         {commentsQuery.isLoading && (
-          <p style={{ textAlign: 'center', padding: 12, color: '#888', fontSize: 13 }}>
+          <p style={{ textAlign: 'center', padding: 12, color: '#888', fontSize: 'clamp(12px, 2vw, 13px)' }}>
             Loading comments...
           </p>
         )}
@@ -76,7 +76,7 @@ export function CommentSection({ postId, currentUser }: CommentSectionProps) {
         ))}
 
         {!commentsQuery.isLoading && allComments.length === 0 && (
-          <p style={{ textAlign: 'center', color: '#888', fontSize: 13, padding: '8px 0' }}>
+          <p style={{ textAlign: 'center', color: '#888', fontSize: 'clamp(12px, 2vw, 13px)', padding: '8px 0' }}>
             No comments yet. Be the first!
           </p>
         )}

@@ -30,7 +30,7 @@ export function ReplyItem({ reply, postId, commentId, currentUser, onDelete, del
   })();
 
   return (
-    <div className="_comment_main" style={{ paddingLeft: 48 }}>
+    <div className="_comment_main" style={{ paddingLeft: 'clamp(24px, 8vw, 48px)' }}>
       <div className="_comment_image">
         <Avatar
           avatarUrl={reply.author.avatarUrl}
@@ -44,10 +44,10 @@ export function ReplyItem({ reply, postId, commentId, currentUser, onDelete, del
         <div className="_comment_details">
           <div className="_comment_details_top">
             <div className="_comment_header">
-              <h4 className="_comment_name_title" style={{ fontSize: 13 }}>
+              <h4 className="_comment_name_title" style={{ fontSize: 'clamp(12px, 2vw, 13px)' }}>
                 {reply.author.firstName} {reply.author.lastName}
               </h4>
-              <span style={{ color: '#999', fontSize: 11, marginLeft: 6 }}>· {timeAgo}</span>
+              <span style={{ color: '#999', fontSize: 'clamp(10px, 1.5vw, 11px)', marginLeft: 'clamp(4px, 1vw, 6px)' }}>· {timeAgo}</span>
             </div>
           </div>
           <div className="_comment_status">
@@ -72,7 +72,7 @@ export function ReplyItem({ reply, postId, commentId, currentUser, onDelete, del
               </div>
               <button
                 onClick={() => setShowLikesModal(true)}
-                style={{ background: 'none', border: 'none', cursor: 'pointer', padding: 0, fontSize: 11, color: '#666', marginLeft: 3 }}
+                style={{ background: 'none', border: 'none', cursor: 'pointer', padding: 0, fontSize: 'clamp(10px, 1.5vw, 11px)', color: '#666', marginLeft: 3 }}
               >
                 {reply.likesCount}
               </button>
@@ -81,7 +81,7 @@ export function ReplyItem({ reply, postId, commentId, currentUser, onDelete, del
 
           <div className="_comment_reply">
             <div className="_comment_reply_num">
-              <div style={{ display: 'flex', alignItems: 'center', gap: 6, fontSize: 11 }}>
+              <div style={{ display: 'flex', alignItems: 'center', gap: 'clamp(4px, 1.5vw, 6px)', fontSize: 'clamp(10px, 1.5vw, 11px)' }}>
                 <span
                   style={{ cursor: 'pointer', color: reply.userLiked ? '#E0245E' : '#555', fontWeight: 600 }}
                   onClick={() => !likeMutation.isPending && likeMutation.mutate({ target: 'reply', targetId: reply.id, postId, commentId })}

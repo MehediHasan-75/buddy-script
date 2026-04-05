@@ -124,7 +124,7 @@ export function PostComposer({ currentUser }: PostComposerProps) {
               type="button"
               onClick={() => setVisibility(v => v === 'PUBLIC' ? 'PRIVATE' : 'PUBLIC')}
               className="_feed_inner_text_area_bottom_photo_link"
-              style={{ display: 'flex', alignItems: 'center', gap: 4, padding: '4px 10px', borderRadius: 20, background: visibility === 'PRIVATE' ? '#faad14' : '#52c41a', color: '#fff', border: 'none', fontSize: 13, fontWeight: 500, cursor: 'pointer' }}
+              style={{ display: 'flex', alignItems: 'center', gap: 'clamp(2px, 1vw, 4px)', padding: 'clamp(4px, 1vw, 10px)', borderRadius: 20, background: visibility === 'PRIVATE' ? '#faad14' : '#52c41a', color: '#fff', border: 'none', fontSize: 'clamp(12px, 2vw, 13px)', fontWeight: 500, cursor: 'pointer' }}
             >
               {visibility === 'PUBLIC' ? (
                 <>

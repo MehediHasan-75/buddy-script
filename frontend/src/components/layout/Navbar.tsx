@@ -3,6 +3,7 @@
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { Avatar } from '@/components/ui/Avatar';
+import { MobileSidebar } from './MobileSidebar';
 import { clearToken } from '@/lib/auth';
 import type { User } from '@/types';
 
@@ -13,6 +14,7 @@ interface NavbarProps {
 export function Navbar({ currentUser }: NavbarProps) {
   const router = useRouter();
   const [profileDropOpen, setProfileDropOpen] = useState(false);
+  const [mobileSidebarOpen, setMobileSidebarOpen] = useState(false);
 
   const handleLogout = () => {
     clearToken();
@@ -21,25 +23,48 @@ export function Navbar({ currentUser }: NavbarProps) {
   };
 
   return (
-    <nav className="navbar navbar-expand-lg navbar-light _header_nav _padd_t10">
-      <div className="container _custom_container">
-        <div className="_logo_wrap">
-          <a className="navbar-brand" href="/feed">
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img src="/assets/images/logo.svg" alt="Buddy Script" className="_nav_logo" />
-          </a>
-        </div>
-        <button
-          className="navbar-toggler bg-light"
-          type="button"
-          data-bs-toggle="collapse"
-          data-bs-target="#navbarSupportedContent"
-          aria-controls="navbarSupportedContent"
-          aria-expanded="false"
-          aria-label="Toggle navigation"
-        >
-          <span className="navbar-toggler-icon"></span>
-        </button>
+    <>
+      <nav className="navbar navbar-expand-lg navbar-light _header_nav _padd_t10">
+        <div className="container _custom_container">
+          {/* Hamburger Menu Button for Mobile */}
+          <button
+            type="button"
+            onClick={() => setMobileSidebarOpen(true)}
+            style={{
+              display: 'none', /* Will be shown by media query */
+              background: 'none',
+              border: 'none',
+              cursor: 'pointer',
+              padding: '8px 12px',
+              marginRight: '12px',
+            }}
+            className="_mobile_hamburger_btn"
+            aria-label="Open navigation menu"
+          >
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+              <line x1="3" y1="6" x2="21" y2="6" />
+              <line x1="3" y1="12" x2="21" y2="12" />
+              <line x1="3" y1="18" x2="21" y2="18" />
+            </svg>
+          </button>
+
+          <div className="_logo_wrap">
+            <a className="navbar-brand" href="/feed">
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img src="/assets/images/logo.svg" alt="Buddy Script" className="_nav_logo" />
+            </a>
+          </div>
+          <button
+            className="navbar-toggler bg-light"
+            type="button"
+            data-bs-toggle="collapse"
+            data-bs-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent"
+            aria-expanded="false"
+            aria-label="Toggle navigation"
+          >
+            <span className="navbar-toggler-icon"></span>
+          </button>
         <div className="collapse navbar-collapse" id="navbarSupportedContent">
           <div className="_header_form ms-auto">
             <form className="_header_form_grp" onSubmit={e => e.preventDefault()}>
@@ -179,5 +204,9 @@ export function Navbar({ currentUser }: NavbarProps) {
         </div>
       </div>
     </nav>
+
+    {/* Mobile Sidebar */}
+    <MobileSidebar isOpen={mobileSidebarOpen} onClose={() => setMobileSidebarOpen(false)} />
+    </>
   );
 }

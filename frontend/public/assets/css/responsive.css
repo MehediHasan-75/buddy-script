@@ -968,4 +968,41 @@
         right: -50px;
     }
 }
-  
+
+
+/* ===== MOBILE SIDEBAR & HAMBURGER MENU ===== */
+
+/* Show hamburger button on mobile (max-width: 767px) */
+@media (max-width: 767px) {
+  ._mobile_hamburger_btn {
+    display: block !important;
+  }
+}
+
+/* Hide hamburger button on tablet and desktop */
+@media (min-width: 768px) {
+  ._mobile_hamburger_btn {
+    display: none !important;
+  }
+}
+
+/* Mobile sidebar link hover state */
+._mobile_sidebar_link:hover {
+  background: #f0f2f5 !important;
+  transform: translateX(2px);
+  transition: all 0.2s ease;
+}
+
+/* Mobile sidebar logout button styling */
+._mobile_sidebar_link_logout {
+  color: #d32f2f !important;
+}
+
+._mobile_sidebar_link_logout:hover {
+  background: #ffebee !important;
+}
+
+/* Ensure responsive clamp() values work in modern browsers */
+@supports (width: clamp(1px, 1vw, 1px)) {
+  /* Browser supports clamp - no fallback needed */
+}

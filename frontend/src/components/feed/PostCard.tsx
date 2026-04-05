@@ -119,13 +119,13 @@ export function PostCard({ post, currentUser }: PostCardProps) {
         {post.imageUrl && (
           <div className="_feed_inner_timeline_image">
             {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img src={post.imageUrl} alt="" className="_time_img" style={{ borderRadius: 8, maxWidth: '100%' }} />
+            <img src={post.imageUrl} alt="" className="_time_img" style={{ borderRadius: 8, maxWidth: '100%', height: 'auto', display: 'block' }} />
           </div>
         )}
       </div>
 
       <div className="_feed_inner_timeline_total_reacts _padd_r24 _padd_l24 _mar_b26">
-        <div className="_feed_inner_timeline_total_reacts_image" style={{ display: 'flex', alignItems: 'center', gap: 6 }}>
+        <div className="_feed_inner_timeline_total_reacts_image" style={{ display: 'flex', alignItems: 'center', gap: 'clamp(6px, 2vw, 8px)' }}>
           {post.likesCount > 0 && (
             <>
               <AvatarStack
@@ -141,7 +141,7 @@ export function PostCard({ post, currentUser }: PostCardProps) {
           <p className="_feed_inner_timeline_total_reacts_para1">
             <button
               type="button"
-              style={{ background: 'none', border: 'none', cursor: 'pointer', fontSize: 13, color: '#666', padding: 0 }}
+              style={{ background: 'none', border: 'none', cursor: 'pointer', fontSize: 'clamp(12px, 2vw, 13px)', color: '#666', padding: 0 }}
               onClick={() => setShowComments(p => !p)}
             >
               <span style={{ fontWeight: 600 }}>{post.commentsCount}</span> Comment{post.commentsCount !== 1 ? 's' : ''}
