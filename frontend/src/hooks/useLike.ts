@@ -65,14 +65,19 @@ export function useLike() {
       }
     },
 
-    onSettled: (_data, _err, { target, postId, commentId }) => {
+    onSettled: (_data, _err, { target, postId, commentId, targetId }) => {
       if (target === 'post') {
         queryClient.invalidateQueries({ queryKey: ['posts'] });
+        queryClient.invalidateQueries({ queryKey: ['likers', 'post', postId] });
       } else if (target === 'comment') {
         queryClient.invalidateQueries({ queryKey: ['comments', postId] });
+        queryClient.invalidateQueries({ queryKey: ['likers', 'comment', targetId] });
       } else {
         // reply — invalidate the replies cache so userLiked/likesCount refresh
-        if (commentId) queryClient.invalidateQueries({ queryKey: ['replies', commentId] });
+        if (commentId) {
+          queryClient.invalidateQueries({ queryKey: ['replies', commentId] });
+          queryClient.invalidateQueries({ queryKey: ['likers', 'reply', targetId] });
+        }
       }
     },
   });
