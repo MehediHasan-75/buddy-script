@@ -9,7 +9,7 @@ update_plan.md
 # Directories
 learning_track/
 frontend/.next/
-
+frontend/public/
 # Dependencies
 node_modules/
 
