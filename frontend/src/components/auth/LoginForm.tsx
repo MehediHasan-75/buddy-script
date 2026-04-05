@@ -118,6 +118,7 @@ export function LoginForm() {
                           className="form-control _social_login_input"
                           value={email}
                           onChange={e => setEmail(e.target.value)}
+                          required
                         />
                       </div>
                     </div>
@@ -129,6 +130,7 @@ export function LoginForm() {
                           className="form-control _social_login_input"
                           value={password}
                           onChange={e => setPassword(e.target.value)}
+                          required
                         />
                       </div>
                     </div>
@@ -138,8 +140,7 @@ export function LoginForm() {
                       <div className="form-check _social_login_form_check">
                         <input
                           className="form-check-input _social_login_form_check_input"
-                          type="radio"
-                          name="flexRadioDefault"
+                          type="checkbox"
                           id="flexRadioDefault2"
                           defaultChecked
                         />

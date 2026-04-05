@@ -22,6 +22,11 @@ export function RegisterForm() {
     e.preventDefault();
     setError(null);
 
+    if (!firstName || !lastName || !email || !password) {
+      setError('All fields are required.');
+      return;
+    }
+
     if (password !== repeatPassword) {
       setError('Passwords do not match.');
       return;
@@ -130,6 +135,7 @@ export function RegisterForm() {
                           className="form-control _social_registration_input"
                           value={firstName}
                           onChange={e => setFirstName(e.target.value)}
+                          required
                         />
                       </div>
                     </div>
@@ -141,6 +147,7 @@ export function RegisterForm() {
                           className="form-control _social_registration_input"
                           value={lastName}
                           onChange={e => setLastName(e.target.value)}
+                          required
                         />
                       </div>
                     </div>
@@ -152,6 +159,7 @@ export function RegisterForm() {
                           className="form-control _social_registration_input"
                           value={email}
                           onChange={e => setEmail(e.target.value)}
+                          required
                         />
                       </div>
                     </div>
@@ -163,6 +171,7 @@ export function RegisterForm() {
                           className="form-control _social_registration_input"
                           value={password}
                           onChange={e => setPassword(e.target.value)}
+                          required
                         />
                       </div>
                     </div>
@@ -174,6 +183,7 @@ export function RegisterForm() {
                           className="form-control _social_registration_input"
                           value={repeatPassword}
                           onChange={e => setRepeatPassword(e.target.value)}
+                          required
                         />
                       </div>
                     </div>
@@ -183,8 +193,7 @@ export function RegisterForm() {
                       <div className="form-check _social_registration_form_check">
                         <input
                           className="form-check-input _social_registration_form_check_input"
-                          type="radio"
-                          name="flexRadioDefault"
+                          type="checkbox"
                           id="flexRadioDefault2"
                           defaultChecked
                         />
