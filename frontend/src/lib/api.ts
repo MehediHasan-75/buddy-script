@@ -6,6 +6,7 @@ const BASE_URL = process.env.NEXT_PUBLIC_API_URL ?? 'http://localhost:8000/api/v
 export const api = axios.create({
   baseURL: BASE_URL,
   withCredentials: true, // send httpOnly refresh token cookie
+  timeout: 10000,
 });
 
 // Attach access token to every request

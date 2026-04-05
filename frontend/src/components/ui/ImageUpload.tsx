@@ -17,6 +17,12 @@ export function ImageUpload({ onUpload, onClear, preview }: ImageUploadProps) {
 
   const handleFile = async (file: File) => {
     setError(null);
+
+    if (file.size > 10 * 1024 * 1024) {
+      setError('Image must be smaller than 10 MB');
+      return;
+    }
+
     setUploading(true);
     abortRef.current = new AbortController();
 

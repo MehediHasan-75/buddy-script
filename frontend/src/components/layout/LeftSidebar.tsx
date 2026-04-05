@@ -101,7 +101,7 @@ export function LeftSidebar() {
             { title: 'No more terrorism no more cry', day: '10', month: 'Jul', going: 17 },
             { title: 'No more terrorism no more cry', day: '10', month: 'Jul', going: 17 },
           ].map((e, i) => (
-            <a key={i} className="_left_inner_event_card_link" href="#">
+            <div key={i} className="_left_inner_event_card_link">
               <div className="_left_inner_event_card">
                 <div className="_left_inner_event_card_iamge">
                   {/* eslint-disable-next-line @next/next/no-img-element */}
@@ -122,7 +122,7 @@ export function LeftSidebar() {
                   <a href="#" className="_left_iner_event_bottom_link">Going</a>
                 </div>
               </div>
-            </a>
+            </div>
           ))}
         </div>
       </div>

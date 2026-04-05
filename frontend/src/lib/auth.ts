@@ -15,6 +15,10 @@ export const setToken = (token: string): void => {
 export const clearToken = (): void => {
   localStorage.removeItem(TOKEN_KEY);
   localStorage.removeItem(USER_KEY);
+  // Clear session signal so middleware doesn't redirect to /feed
+  if (typeof document !== 'undefined') {
+    document.cookie = 'bs_session=; path=/; max-age=0; SameSite=Lax';
+  }
 };
 
 export const getUser = (): User | null => {
