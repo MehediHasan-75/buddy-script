@@ -14,6 +14,7 @@ interface CommentItemProps {
   comment: Comment;
   postId: string;
   currentUser: User;
+  isDark?: boolean;
   onDelete: (commentId: string) => void;
   deleting: boolean;
   onCreateReply: (commentId: string, content: string) => Promise<void>;
@@ -24,6 +25,7 @@ export function CommentItem({
   comment,
   postId,
   currentUser,
+  isDark = false,
   onDelete,
   deleting,
   onCreateReply,
@@ -89,7 +91,7 @@ export function CommentItem({
               <button
                 onClick={() => setShowLikesModal(true)}
                 className="_secondary_text_btn"
-                style={{ background: 'none', border: 'none', cursor: 'pointer', padding: 0, fontSize: 'clamp(11px, 1.5vw, 12px)', color: '#666', marginLeft: 4 }}
+                style={{ background: 'none', border: 'none', cursor: 'pointer', padding: 0, fontSize: 'clamp(11px, 1.5vw, 12px)', color: isDark ? '#aaa' : '#666', marginLeft: 4 }}
               >
                 {comment.likesCount}
               </button>
@@ -140,7 +142,7 @@ export function CommentItem({
 
           {showReplies && (
             <div style={{ marginTop: 8 }}>
-              {repliesLoading && <p style={{ fontSize: 'clamp(11px, 1.5vw, 12px)', color: '#888' }}>Loading replies...</p>}
+              {repliesLoading && <p style={{ fontSize: 'clamp(11px, 1.5vw, 12px)', color: isDark ? '#aaa' : '#888' }}>Loading replies...</p>}
               {repliesData?.replies.map(reply => (
                 <ReplyItem
                   key={reply.id}
@@ -148,6 +150,7 @@ export function CommentItem({
                   postId={postId}
                   commentId={comment.id}
                   currentUser={currentUser}
+                  isDark={isDark}
                   onDelete={(replyId) => onDeleteReply(replyId, comment.id)}
                   deleting={false}
                 />

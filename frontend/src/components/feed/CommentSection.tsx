@@ -65,6 +65,7 @@ export function CommentSection({ postId, currentUser, isDark = false }: CommentS
             comment={comment}
             postId={postId}
             currentUser={currentUser}
+            isDark={isDark}
             onDelete={(id) => deleteComment.mutate(id)}
             deleting={deleteComment.isPending}
             onCreateReply={async (commentId, content) => {

@@ -122,7 +122,7 @@ export function PostComposer({ currentUser, isDark = false }: PostComposerProps)
                 justifyContent: 'center',
                 borderRadius: 6,
                 transition: 'background-color 0.2s',
-                color: '#666',
+                color: isDark ? '#ccc' : '#666',
                 position: 'relative',
               }}
               onMouseEnter={(e) => {
@@ -155,7 +155,7 @@ export function PostComposer({ currentUser, isDark = false }: PostComposerProps)
                 justifyContent: 'center',
                 borderRadius: 6,
                 transition: 'background-color 0.2s',
-                color: '#666',
+                color: isDark ? '#ccc' : '#666',
                 position: 'relative',
               }}
               onMouseEnter={(e) => {
@@ -192,7 +192,7 @@ export function PostComposer({ currentUser, isDark = false }: PostComposerProps)
                 justifyContent: 'center',
                 borderRadius: 6,
                 transition: 'background-color 0.2s',
-                color: '#666',
+                color: isDark ? '#ccc' : '#666',
                 position: 'relative',
               }}
               onMouseEnter={(e) => {
@@ -232,8 +232,8 @@ export function PostComposer({ currentUser, isDark = false }: PostComposerProps)
                 padding: 'clamp(6px, 1.5vw, 10px) clamp(10px, 2vw, 14px)',
                 borderRadius: 20,
                 background: 'transparent',
-                border: '1px solid #d9d9d9',
-                color: '#666',
+                border: isDark ? '1px solid #555' : '1px solid #d9d9d9',
+                color: isDark ? '#ccc' : '#666',
                 fontSize: 'clamp(11px, 1.5vw, 12px)',
                 fontWeight: 500,
                 cursor: 'pointer',
@@ -242,11 +242,11 @@ export function PostComposer({ currentUser, isDark = false }: PostComposerProps)
               onMouseEnter={(e) => {
                 const el = e.currentTarget as HTMLElement;
                 el.style.borderColor = '#1890FF';
-                el.style.backgroundColor = '#f5f9ff';
+                el.style.backgroundColor = isDark ? '#1a3a52' : '#f5f9ff';
               }}
               onMouseLeave={(e) => {
                 const el = e.currentTarget as HTMLElement;
-                el.style.borderColor = '#d9d9d9';
+                el.style.borderColor = isDark ? '#555' : '#d9d9d9';
                 el.style.backgroundColor = 'transparent';
               }}
             >

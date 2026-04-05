@@ -12,11 +12,12 @@ interface ReplyItemProps {
   postId: string;
   commentId: string;
   currentUser: User;
+  isDark?: boolean;
   onDelete: (replyId: string) => void;
   deleting: boolean;
 }
 
-export function ReplyItem({ reply, postId, commentId, currentUser, onDelete, deleting }: ReplyItemProps) {
+export function ReplyItem({ reply, postId, commentId, currentUser, isDark = false, onDelete, deleting }: ReplyItemProps) {
   const likeMutation = useLike();
   const [showLikesModal, setShowLikesModal] = useState(false);
   const isAuthor = reply.author.id === currentUser.id;
@@ -73,7 +74,7 @@ export function ReplyItem({ reply, postId, commentId, currentUser, onDelete, del
               <button
                 onClick={() => setShowLikesModal(true)}
                 className="_secondary_text_btn"
-                style={{ background: 'none', border: 'none', cursor: 'pointer', padding: 0, fontSize: 'clamp(10px, 1.5vw, 11px)', color: '#666', marginLeft: 3 }}
+                style={{ background: 'none', border: 'none', cursor: 'pointer', padding: 0, fontSize: 'clamp(10px, 1.5vw, 11px)', color: isDark ? '#aaa' : '#666', marginLeft: 3 }}
               >
                 {reply.likesCount}
               </button>
