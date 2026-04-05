@@ -10,7 +10,7 @@ interface PostListProps {
 }
 
 export function PostList({ currentUser }: PostListProps) {
-  const { data, isLoading, isFetchingNextPage, hasNextPage, fetchNextPage } = useInfinitePosts();
+  const { data, isLoading, isError, isFetchingNextPage, hasNextPage, fetchNextPage, refetch } = useInfinitePosts();
   const sentinelRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -27,6 +27,22 @@ export function PostList({ currentUser }: PostListProps) {
     observer.observe(el);
     return () => observer.disconnect();
   }, [hasNextPage, isFetchingNextPage, fetchNextPage]);
+
+  if (isError) {
+    return (
+      <div className="_feed_inner_timeline_post_area _b_radious6 _padd_b24 _padd_t24 _mar_b16"
+        style={{ textAlign: 'center', padding: 48 }}>
+        <p style={{ color: '#888', fontSize: 16, marginBottom: 16 }}>Failed to load posts.</p>
+        <button
+          type="button"
+          className="btn btn-primary"
+          onClick={() => refetch()}
+        >
+          Try again
+        </button>
+      </div>
+    );
+  }
 
   if (isLoading) {
     return (

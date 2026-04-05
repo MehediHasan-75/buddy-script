@@ -5,7 +5,9 @@ import { formatDistanceToNow } from 'date-fns';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { api } from '@/lib/api';
 import { Avatar } from '@/components/ui/Avatar';
+import { Modal } from '@/components/ui/Modal';
 import { CommentSection } from './CommentSection';
+import { LikesModal } from './LikesModal';
 import { useLike } from '@/hooks/useLike';
 import type { Post, User } from '@/types';
 
@@ -18,6 +20,8 @@ export function PostCard({ post, currentUser }: PostCardProps) {
   const queryClient = useQueryClient();
   const [showComments, setShowComments] = useState(false);
   const [dropdownOpen, setDropdownOpen] = useState(false);
+  const [showDeleteModal, setShowDeleteModal] = useState(false);
+  const [showLikesModal, setShowLikesModal] = useState(false);
   const likeMutation = useLike();
 
   const timeAgo = (() => {
@@ -86,7 +90,7 @@ export function PostCard({ post, currentUser }: PostCardProps) {
                         style={{ background: 'none', border: 'none', width: '100%', textAlign: 'left', cursor: 'pointer' }}
                         onClick={() => {
                           setDropdownOpen(false);
-                          if (confirm('Delete this post?')) deleteMutation.mutate();
+                          setShowDeleteModal(true);
                         }}
                         disabled={deleteMutation.isPending}
                       >
@@ -125,6 +129,13 @@ export function PostCard({ post, currentUser }: PostCardProps) {
                 <path d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
               </svg>
               <p className="_feed_inner_timeline_total_reacts_para">{post.likesCount}</p>
+              <button
+                onClick={() => setShowLikesModal(true)}
+                style={{ background: 'none', border: 'none', cursor: 'pointer', padding: 0 }}
+                className="_feed_inner_timeline_total_reacts_para"
+              >
+                {post.likesCount}
+              </button>
             </>
           )}
         </div>
@@ -196,6 +207,35 @@ export function PostCard({ post, currentUser }: PostCardProps) {
       </div>
 
       {showComments && <CommentSection postId={post.id} currentUser={currentUser} />}
+
+      <LikesModal
+        isOpen={showLikesModal}
+        onClose={() => setShowLikesModal(false)}
+        target="post"
+        targetId={post.id}
+        count={post.likesCount}
+      />
+
+      <Modal isOpen={showDeleteModal} onClose={() => setShowDeleteModal(false)} title="Delete Post">
+        <p style={{ marginBottom: 20 }}>Are you sure you want to delete this post? This cannot be undone.</p>
+        <div style={{ display: 'flex', gap: 12, justifyContent: 'flex-end' }}>
+          <button
+            type="button"
+            className="btn btn-secondary"
+            onClick={() => setShowDeleteModal(false)}
+          >
+            Cancel
+          </button>
+          <button
+            type="button"
+            className="btn btn-danger"
+            disabled={deleteMutation.isPending}
+            onClick={() => { deleteMutation.mutate(); setShowDeleteModal(false); }}
+          >
+            {deleteMutation.isPending ? 'Deleting...' : 'Delete'}
+          </button>
+        </div>
+      </Modal>
     </div>
   );
 }

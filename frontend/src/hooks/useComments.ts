@@ -1,6 +1,7 @@
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { api } from '@/lib/api';
-import type { Comment, CommentsResponse, Reply, RepliesResponse } from '@/types';
+import type { Comment, CommentsResponse, FeedResponse, Reply, RepliesResponse } from '@/types';
+import type { InfiniteData } from '@tanstack/react-query';
 
 export function useComments(postId: string, enabled = true) {
   const queryClient = useQueryClient();
@@ -16,6 +17,26 @@ export function useComments(postId: string, enabled = true) {
     enabled,
   });
 
+  const updatePostCommentCount = (delta: number) => {
+    queryClient.setQueriesData<InfiniteData<FeedResponse>>(
+      { queryKey: ['posts'] },
+      (old) => {
+        if (!old) return old;
+        return {
+          ...old,
+          pages: old.pages.map(page => ({
+            ...page,
+            posts: page.posts.map(p =>
+              p.id === postId
+                ? { ...p, commentsCount: Math.max(0, p.commentsCount + delta) }
+                : p,
+            ),
+          })),
+        };
+      },
+    );
+  };
+
   const createComment = useMutation({
     mutationFn: async (content: string) => {
       const { data } = await api.post<{ data: { comment: Comment } }>(
@@ -24,14 +45,20 @@ export function useComments(postId: string, enabled = true) {
       );
       return data.data.comment;
     },
-    onSuccess: () => queryClient.invalidateQueries({ queryKey: ['comments', postId] }),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['comments', postId] });
+      updatePostCommentCount(1);
+    },
   });
 
   const deleteComment = useMutation({
     mutationFn: async (commentId: string) => {
       await api.delete(`/comments/${commentId}`);
     },
-    onSuccess: () => queryClient.invalidateQueries({ queryKey: ['comments', postId] }),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['comments', postId] });
+      updatePostCommentCount(-1);
+    },
   });
 
   const createReply = useMutation({

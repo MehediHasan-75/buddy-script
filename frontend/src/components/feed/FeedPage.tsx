@@ -1,32 +1,31 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { useRouter } from 'next/navigation';
 import { Navbar } from '@/components/layout/Navbar';
 import { LeftSidebar } from '@/components/layout/LeftSidebar';
 import { RightSidebar } from '@/components/layout/RightSidebar';
 import { DarkModeToggle } from '@/components/layout/DarkModeToggle';
 import { PostComposer } from './PostComposer';
 import { PostList } from './PostList';
-import { getUser } from '@/lib/auth';
+import { getUser, clearToken } from '@/lib/auth';
 import type { User } from '@/types';
 
 export function FeedPage() {
-  const router = useRouter();
   const [isDark, setIsDark] = useState(false);
   const [currentUser, setCurrentUser] = useState<User | null>(null);
 
   useEffect(() => {
     const user = getUser();
     if (!user) {
-      router.replace('/login');
+      clearToken(); // also clears bs_session cookie so proxy won't loop back to /feed
+      window.location.replace('/login');
       return;
     }
     setCurrentUser(user);
 
     const saved = localStorage.getItem('theme');
     if (saved === 'dark') setIsDark(true);
-  }, [router]);
+  }, []);
 
   const toggleDark = () => {
     setIsDark(prev => {
@@ -36,7 +35,15 @@ export function FeedPage() {
     });
   };
 
-  if (!currentUser) return null;
+  if (!currentUser) {
+    return (
+      <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', minHeight: '100vh' }}>
+        <div className="spinner-border text-primary" role="status">
+          <span className="visually-hidden">Loading...</span>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className={`_layout _layout_main_wrapper${isDark ? ' _dark_wrapper' : ''}`}>
