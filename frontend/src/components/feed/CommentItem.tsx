@@ -7,6 +7,7 @@ import { ReplyItem } from './ReplyItem';
 import { CommentComposer } from './CommentComposer';
 import { useLike } from '@/hooks/useLike';
 import { useReplies } from '@/hooks/useComments';
+import { LikesModal } from './LikesModal';
 import type { Comment, User } from '@/types';
 
 interface CommentItemProps {
@@ -31,6 +32,7 @@ export function CommentItem({
   const likeMutation = useLike();
   const [showReplyComposer, setShowReplyComposer] = useState(false);
   const [showReplies, setShowReplies] = useState(false);
+  const [showLikesModal, setShowLikesModal] = useState(false);
   const isAuthor = comment.author.id === currentUser.id;
 
   const { data: repliesData, isLoading: repliesLoading } = useReplies(comment.id, showReplies);
@@ -68,50 +70,60 @@ export function CommentItem({
               <span>{comment.content}</span>
             </p>
           </div>
-          <div className="_total_reactions">
-            <div className="_total_react">
-              <span
-                className="_reaction_like"
-                style={{ cursor: 'pointer' }}
-                onClick={() => likeMutation.mutate({ target: 'comment', targetId: comment.id, postId })}
+
+          {comment.likesCount > 0 && (
+            <div className="_total_reactions">
+              <div className="_total_react">
+                <span className="_reaction_like">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="#1890FF" stroke="none">
+                    <path d="M14 9V5a3 3 0 0 0-3-3l-4 9v11h11.28a2 2 0 0 0 2-1.7l1.38-9a2 2 0 0 0-2-2.3zM7 22H4a2 2 0 0 1-2-2v-7a2 2 0 0 1 2-2h3" />
+                  </svg>
+                </span>
+                <span className="_reaction_heart">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="#E0245E" stroke="none">
+                    <path d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
+                  </svg>
+                </span>
+              </div>
+              <button
+                onClick={() => setShowLikesModal(true)}
+                style={{ background: 'none', border: 'none', cursor: 'pointer', padding: 0, fontSize: 13, color: '#666' }}
               >
-                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                  <path d="M14 9V5a3 3 0 0 0-3-3l-4 9v11h11.28a2 2 0 0 0 2-1.7l1.38-9a2 2 0 0 0-2-2.3zM7 22H4a2 2 0 0 1-2-2v-7a2 2 0 0 1 2-2h3"/>
-                </svg>
-              </span>
-              <span className="_reaction_heart">
-                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                  <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/>
-                </svg>
-              </span>
+                {comment.likesCount}
+              </button>
             </div>
-            <span className="_total">{comment.likesCount || 198}</span>
-          </div>
+          )}
+
           <div className="_comment_reply">
             <div className="_comment_reply_num">
-              <ul className="_comment_reply_list">
-                <li><span>Like.</span></li>
-                <li>
-                  <span
-                    style={{ cursor: 'pointer' }}
-                    onClick={() => setShowReplyComposer(p => !p)}
-                  >
-                    Reply.
-                  </span>
-                </li>
-                <li><span>Share</span></li>
-                <li><span className="_time_link">{timeAgo}</span></li>
+              <div style={{ display: 'flex', alignItems: 'center', gap: 6, fontSize: 12, flexWrap: 'wrap' }}>
+                <span
+                  style={{ cursor: 'pointer', color: comment.userLiked ? '#E0245E' : '#555', fontWeight: comment.userLiked ? 600 : undefined }}
+                  onClick={() => likeMutation.mutate({ target: 'comment', targetId: comment.id, postId })}
+                >
+                  Like
+                </span>
+                <span style={{ color: '#ccc' }}>·</span>
+                <span
+                  style={{ cursor: 'pointer', color: '#555' }}
+                  onClick={() => setShowReplyComposer(p => !p)}
+                >
+                  Reply
+                </span>
                 {isAuthor && (
-                  <li>
+                  <>
+                    <span style={{ color: '#ccc' }}>·</span>
                     <span
                       style={{ cursor: 'pointer', color: '#cf1322' }}
                       onClick={() => !deleting && onDelete(comment.id)}
                     >
-                      Delete.
+                      Delete
                     </span>
-                  </li>
+                  </>
                 )}
-              </ul>
+                <span style={{ color: '#ccc' }}>·</span>
+                <span style={{ color: '#999' }}>{timeAgo}</span>
+              </div>
             </div>
           </div>
 
@@ -134,6 +146,7 @@ export function CommentItem({
                   key={reply.id}
                   reply={reply}
                   postId={postId}
+                  commentId={comment.id}
                   currentUser={currentUser}
                   onDelete={(replyId) => onDeleteReply(replyId, comment.id)}
                   deleting={false}
@@ -148,6 +161,7 @@ export function CommentItem({
               onSubmit={async (content) => {
                 await onCreateReply(comment.id, content);
                 setShowReplies(true);
+                setShowReplyComposer(false);
               }}
               placeholder={`Reply to ${comment.author.firstName}...`}
               compact
@@ -155,6 +169,14 @@ export function CommentItem({
           )}
         </div>
       </div>
+
+      <LikesModal
+        isOpen={showLikesModal}
+        onClose={() => setShowLikesModal(false)}
+        target="comment"
+        targetId={comment.id}
+        count={comment.likesCount}
+      />
     </div>
   );
 }

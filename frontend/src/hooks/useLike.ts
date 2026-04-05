@@ -6,6 +6,7 @@ interface LikeArgs {
   target: LikeTarget;
   targetId: string;
   postId: string;
+  commentId?: string; // required when target === 'reply'
 }
 
 interface LikeResponse {
@@ -64,11 +65,14 @@ export function useLike() {
       }
     },
 
-    onSettled: (_data, _err, { target, postId }) => {
+    onSettled: (_data, _err, { target, postId, commentId }) => {
       if (target === 'post') {
         queryClient.invalidateQueries({ queryKey: ['posts'] });
-      } else {
+      } else if (target === 'comment') {
         queryClient.invalidateQueries({ queryKey: ['comments', postId] });
+      } else {
+        // reply — invalidate the replies cache so userLiked/likesCount refresh
+        if (commentId) queryClient.invalidateQueries({ queryKey: ['replies', commentId] });
       }
     },
   });
