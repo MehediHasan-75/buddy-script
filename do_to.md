@@ -14,3 +14,6 @@
 --> register lgoin freez hoye zacche kno kono feedback chara.
 -->reply ui is also broken
 
+
+
+---> serious problem on like. do deep research and find the incositacy of something wroking sometime not. also for show reactor profile.

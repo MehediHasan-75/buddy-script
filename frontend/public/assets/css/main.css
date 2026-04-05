@@ -1913,8 +1913,8 @@
     color:var(--color6);
 }
 ._feed_inner_timeline_reaction {
-    background: #FBFCFD;
-    padding: 8px;
+    background: transparent;
+    padding: 4px;
     display: -webkit-box;
     display: -ms-flexbox;
     display: flex;
@@ -1929,7 +1929,7 @@
     border:none;
 }
 ._feed_reaction:hover {
-    background:#e4f1fd;
+    background: transparent;
 }
 ._feed_inner_timeline_reaction_emoji_link span svg {
     margin:0 8px 0 0;
@@ -1952,11 +1952,15 @@
         -ms-flex-pack: center;
             justify-content: center;
     height: 48px;
-    background:transparent;
-    border:none;
-    -webkit-transition:.2s all ease;
-    -o-transition:.2s all ease;
-    transition:.2s all ease;
+    background: transparent;
+    border: none;
+    border-radius: 20px;
+    -webkit-transition: .2s all ease;
+    -o-transition: .2s all ease;
+    transition: .2s all ease;
+}
+._feed_reaction:hover {
+    background: #f0f2f5;
 }
 ._feed_inner_timeline_cooment_area {
     padding:24px 24px 10px;
@@ -3406,10 +3410,10 @@
     color:var(--bg2);
 }
 ._dark_wrapper ._feed_inner_timeline_reaction {
-    background: #11263c;
+    background: transparent;
 }
 ._dark_wrapper ._feed_reaction_active {
-    background: #123150 !important;
+    background: transparent !important;
 }
 ._dark_wrapper ._feed_reaction {
     border-radius: 6px;
@@ -3454,7 +3458,7 @@
     fill:var(--bg2);
 }
 ._dark_wrapper ._feed_reaction:hover {
-    background: #123150;
+    background: #2a3f5f;
 }
 ._dark_wrapper ._feed_inner_timeline_total_reacts_para1 a {
     color: rgba(255, 255, 255, 0.46);
@@ -5889,7 +5893,7 @@
 }
 ._comment_image {
     flex: 0 0 40px;
-    overflow: hidden;
+    overflow: visible;
     height: 40px;
     width: 40px;
     position: relative;
@@ -5897,6 +5901,16 @@
     border: 1px solid var(--border-color);
     display: block;
     cursor: pointer;
+}
+._comment_image::after {
+    content: '';
+    position: absolute;
+    left: 50%;
+    top: 40px;
+    width: 2px;
+    height: 12px;
+    background: #f0f0f0;
+    transform: translateX(-50%);
 }
 ._comment_img1 {
     max-width: 40px;
@@ -5914,8 +5928,8 @@
     max-width: 100%;
     position: relative;
     margin: 0 0 12px;
-    border-left: 3px solid #f0f0f0;
-    padding-left: 12px;
+    border: none;
+    padding: 0;
 }
 ._comment_details_top {
     display: flex;
