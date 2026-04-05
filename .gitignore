@@ -8,6 +8,7 @@ prompt.md
 update_plan.md
 # Directories
 learning_track/
+frontend/.next/
 
 # Dependencies
 node_modules/
