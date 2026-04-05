@@ -43,10 +43,11 @@ export function ReplyItem({ reply, postId, commentId, currentUser, onDelete, del
       <div className="_comment_area">
         <div className="_comment_details">
           <div className="_comment_details_top">
-            <div className="_comment_name">
+            <div className="_comment_header">
               <h4 className="_comment_name_title" style={{ fontSize: 13 }}>
                 {reply.author.firstName} {reply.author.lastName}
               </h4>
+              <span style={{ color: '#999', fontSize: 11, marginLeft: 6 }}>· {timeAgo}</span>
             </div>
           </div>
           <div className="_comment_status">
@@ -56,22 +57,22 @@ export function ReplyItem({ reply, postId, commentId, currentUser, onDelete, del
           </div>
 
           {reply.likesCount > 0 && (
-            <div className="_total_reactions">
+            <div className="_comment_reactions_inline">
               <div className="_total_react">
                 <span className="_reaction_like">
-                  <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="#1890FF" stroke="none">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="#1890FF" stroke="none">
                     <path d="M14 9V5a3 3 0 0 0-3-3l-4 9v11h11.28a2 2 0 0 0 2-1.7l1.38-9a2 2 0 0 0-2-2.3zM7 22H4a2 2 0 0 1-2-2v-7a2 2 0 0 1 2-2h3" />
                   </svg>
                 </span>
                 <span className="_reaction_heart">
-                  <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="#E0245E" stroke="none">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="#E0245E" stroke="none">
                     <path d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
                   </svg>
                 </span>
               </div>
               <button
                 onClick={() => setShowLikesModal(true)}
-                style={{ background: 'none', border: 'none', cursor: 'pointer', padding: 0, fontSize: 12, color: '#666' }}
+                style={{ background: 'none', border: 'none', cursor: 'pointer', padding: 0, fontSize: 11, color: '#666', marginLeft: 3 }}
               >
                 {reply.likesCount}
               </button>
@@ -80,7 +81,7 @@ export function ReplyItem({ reply, postId, commentId, currentUser, onDelete, del
 
           <div className="_comment_reply">
             <div className="_comment_reply_num">
-              <div style={{ display: 'flex', alignItems: 'center', gap: 6, fontSize: 12, flexWrap: 'wrap' }}>
+              <div style={{ display: 'flex', alignItems: 'center', gap: 6, fontSize: 11 }}>
                 <span
                   style={{ cursor: 'pointer', color: reply.userLiked ? '#E0245E' : '#555', fontWeight: reply.userLiked ? 600 : undefined }}
                   onClick={() => !likeMutation.isPending && likeMutation.mutate({ target: 'reply', targetId: reply.id, postId, commentId })}
@@ -91,15 +92,13 @@ export function ReplyItem({ reply, postId, commentId, currentUser, onDelete, del
                   <>
                     <span style={{ color: '#ccc' }}>·</span>
                     <span
-                      style={{ cursor: 'pointer', color: '#cf1322' }}
+                      style={{ cursor: 'pointer', color: '#555' }}
                       onClick={() => !deleting && onDelete(reply.id)}
                     >
-                      Delete
+                      {deleting ? 'Deleting...' : 'Delete'}
                     </span>
                   </>
                 )}
-                <span style={{ color: '#ccc' }}>·</span>
-                <span style={{ color: '#999', fontSize: 11 }}>{timeAgo}</span>
               </div>
             </div>
           </div>

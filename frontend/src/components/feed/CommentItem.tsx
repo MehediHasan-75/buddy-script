@@ -59,10 +59,11 @@ export function CommentItem({
       <div className="_comment_area">
         <div className="_comment_details">
           <div className="_comment_details_top">
-            <div className="_comment_name">
+            <div className="_comment_header">
               <h4 className="_comment_name_title">
                 {comment.author.firstName} {comment.author.lastName}
               </h4>
+              <span style={{ color: '#999', fontSize: 12, marginLeft: 6 }}>· {timeAgo}</span>
             </div>
           </div>
           <div className="_comment_status">
@@ -72,22 +73,22 @@ export function CommentItem({
           </div>
 
           {comment.likesCount > 0 && (
-            <div className="_total_reactions">
+            <div className="_comment_reactions_inline">
               <div className="_total_react">
                 <span className="_reaction_like">
-                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="#1890FF" stroke="none">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="#1890FF" stroke="none">
                     <path d="M14 9V5a3 3 0 0 0-3-3l-4 9v11h11.28a2 2 0 0 0 2-1.7l1.38-9a2 2 0 0 0-2-2.3zM7 22H4a2 2 0 0 1-2-2v-7a2 2 0 0 1 2-2h3" />
                   </svg>
                 </span>
                 <span className="_reaction_heart">
-                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="#E0245E" stroke="none">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="#E0245E" stroke="none">
                     <path d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
                   </svg>
                 </span>
               </div>
               <button
                 onClick={() => setShowLikesModal(true)}
-                style={{ background: 'none', border: 'none', cursor: 'pointer', padding: 0, fontSize: 13, color: '#666' }}
+                style={{ background: 'none', border: 'none', cursor: 'pointer', padding: 0, fontSize: 12, color: '#666', marginLeft: 4 }}
               >
                 {comment.likesCount}
               </button>
@@ -96,7 +97,7 @@ export function CommentItem({
 
           <div className="_comment_reply">
             <div className="_comment_reply_num">
-              <div style={{ display: 'flex', alignItems: 'center', gap: 6, fontSize: 12, flexWrap: 'wrap' }}>
+              <div style={{ display: 'flex', alignItems: 'center', gap: 6, fontSize: 12 }}>
                 <span
                   style={{ cursor: 'pointer', color: comment.userLiked ? '#E0245E' : '#555', fontWeight: comment.userLiked ? 600 : undefined }}
                   onClick={() => likeMutation.mutate({ target: 'comment', targetId: comment.id, postId })}
@@ -114,15 +115,13 @@ export function CommentItem({
                   <>
                     <span style={{ color: '#ccc' }}>·</span>
                     <span
-                      style={{ cursor: 'pointer', color: '#cf1322' }}
+                      style={{ cursor: 'pointer', color: '#555' }}
                       onClick={() => !deleting && onDelete(comment.id)}
                     >
-                      Delete
+                      {deleting ? 'Deleting...' : 'Delete'}
                     </span>
                   </>
                 )}
-                <span style={{ color: '#ccc' }}>·</span>
-                <span style={{ color: '#999' }}>{timeAgo}</span>
               </div>
             </div>
           </div>
@@ -132,9 +131,9 @@ export function CommentItem({
               type="button"
               className="_previous_comment_txt"
               onClick={() => setShowReplies(p => !p)}
-              style={{ marginTop: 4 }}
+              style={{ marginTop: 8 }}
             >
-              {showReplies ? 'Hide replies' : `View ${comment.repliesCount} repl${comment.repliesCount !== 1 ? 'ies' : 'y'}`}
+              {showReplies ? '─ Hide replies' : `↳ View ${comment.repliesCount} repl${comment.repliesCount !== 1 ? 'ies' : 'y'}`}
             </button>
           )}
 

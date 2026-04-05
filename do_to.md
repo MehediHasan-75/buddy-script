@@ -12,4 +12,5 @@
 --> see how public and private is handling
 -->this ui is breaking while i did comment. after some time thisis is fixing what is the problem
 --> register lgoin freez hoye zacche kno kono feedback chara.
+-->reply ui is also broken
 
