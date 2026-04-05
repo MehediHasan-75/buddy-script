@@ -31,7 +31,6 @@ export function Navbar({ currentUser }: NavbarProps) {
             type="button"
             onClick={() => setMobileSidebarOpen(true)}
             style={{
-              display: 'none', /* Will be shown by media query */
               background: 'none',
               border: 'none',
               cursor: 'pointer',

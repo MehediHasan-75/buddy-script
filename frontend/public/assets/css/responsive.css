@@ -344,8 +344,9 @@
         display: none;
     }
     /*--- Desktop Menu ---- */
-    ._header_nav {
-        display: none;
+    /* Keep navbar visible for hamburger button */
+    .navbar-collapse {
+        display: none !important;
     }
     ._layout_mode_swithing_btn {
         display: none;
@@ -976,6 +977,10 @@
 @media (max-width: 767px) {
   ._mobile_hamburger_btn {
     display: block !important;
+  }
+  /* Hide Bootstrap navbar-toggler on mobile */
+  .navbar-toggler {
+    display: none !important;
   }
 }
 
