@@ -146,7 +146,7 @@ export function PostCard({ post, currentUser }: PostCardProps) {
               style={{ background: 'none', border: 'none', cursor: 'pointer', fontSize: 13, color: '#666', padding: 0 }}
               onClick={() => setShowComments(p => !p)}
             >
-              <span>{post.commentsCount}</span> Comment{post.commentsCount !== 1 ? 's' : ''}
+              <span style={{ fontWeight: 600 }}>{post.commentsCount}</span> Comment{post.commentsCount !== 1 ? 's' : ''}
             </button>
           </p>
         </div>

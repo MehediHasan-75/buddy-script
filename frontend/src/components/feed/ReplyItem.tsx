@@ -83,7 +83,7 @@ export function ReplyItem({ reply, postId, commentId, currentUser, onDelete, del
             <div className="_comment_reply_num">
               <div style={{ display: 'flex', alignItems: 'center', gap: 6, fontSize: 11 }}>
                 <span
-                  style={{ cursor: 'pointer', color: reply.userLiked ? '#E0245E' : '#555', fontWeight: reply.userLiked ? 600 : undefined }}
+                  style={{ cursor: 'pointer', color: reply.userLiked ? '#E0245E' : '#555', fontWeight: 600 }}
                   onClick={() => !likeMutation.isPending && likeMutation.mutate({ target: 'reply', targetId: reply.id, postId, commentId })}
                 >
                   Like
@@ -92,7 +92,7 @@ export function ReplyItem({ reply, postId, commentId, currentUser, onDelete, del
                   <>
                     <span style={{ color: '#ccc' }}>·</span>
                     <span
-                      style={{ cursor: 'pointer', color: '#555' }}
+                      style={{ cursor: 'pointer', color: '#555', fontWeight: 600 }}
                       onClick={() => !deleting && onDelete(reply.id)}
                     >
                       {deleting ? 'Deleting...' : 'Delete'}

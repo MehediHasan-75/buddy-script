@@ -99,14 +99,14 @@ export function CommentItem({
             <div className="_comment_reply_num">
               <div style={{ display: 'flex', alignItems: 'center', gap: 6, fontSize: 12 }}>
                 <span
-                  style={{ cursor: 'pointer', color: comment.userLiked ? '#E0245E' : '#555', fontWeight: comment.userLiked ? 600 : undefined }}
+                  style={{ cursor: 'pointer', color: comment.userLiked ? '#E0245E' : '#555', fontWeight: 600 }}
                   onClick={() => likeMutation.mutate({ target: 'comment', targetId: comment.id, postId })}
                 >
                   Like
                 </span>
                 <span style={{ color: '#ccc' }}>·</span>
                 <span
-                  style={{ cursor: 'pointer', color: '#555' }}
+                  style={{ cursor: 'pointer', color: '#555', fontWeight: 600 }}
                   onClick={() => setShowReplyComposer(p => !p)}
                 >
                   Reply
@@ -115,7 +115,7 @@ export function CommentItem({
                   <>
                     <span style={{ color: '#ccc' }}>·</span>
                     <span
-                      style={{ cursor: 'pointer', color: '#555' }}
+                      style={{ cursor: 'pointer', color: '#555', fontWeight: 600 }}
                       onClick={() => !deleting && onDelete(comment.id)}
                     >
                       {deleting ? 'Deleting...' : 'Delete'}
