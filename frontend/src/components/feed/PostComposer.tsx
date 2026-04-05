@@ -56,7 +56,7 @@ export function PostComposer({ currentUser }: PostComposerProps) {
               className="_txt_img"
             />
           </div>
-          <div className="form-floating _feed_inner_text_area_box_form" style={{ flex: 1 }}>
+          <div className="form-floating _feed_inner_text_area_box_form" style={{ flex: 1, position: 'relative' }}>
             <textarea
               className="form-control _textarea"
               placeholder="Leave a comment here"
@@ -65,13 +65,29 @@ export function PostComposer({ currentUser }: PostComposerProps) {
               onChange={e => setContent(e.target.value)}
               maxLength={5000}
               rows={3}
+              style={{
+                border: '1px solid #e0e0e0',
+                backgroundColor: '#fafafa',
+                borderRadius: 8,
+                fontSize: 'clamp(13px, 2vw, 15px)',
+              }}
             />
             {!content && (
-              <label className="_feed_textarea_label" htmlFor="postTextarea">
-                Write something ...
-                <svg xmlns="http://www.w3.org/2000/svg" width="23" height="24" fill="none" viewBox="0 0 23 24">
-                  <path fill="#666" d="M19.504 19.209c.332 0 .601.289.601.646 0 .326-.226.596-.52.64l-.081.005h-6.276c-.332 0-.602-.289-.602-.645 0-.327.227-.597.52-.64l.082-.006h6.276zM13.4 4.417c1.139-1.223 2.986-1.223 4.125 0l1.182 1.268c1.14 1.223 1.14 3.205 0 4.427L9.82 19.649a2.619 2.619 0 01-1.916.85h-3.64c-.337 0-.61-.298-.6-.66l.09-3.941a3.019 3.019 0 01.794-1.982l8.852-9.5zm-.688 2.562l-7.313 7.85a1.68 1.68 0 00-.441 1.101l-.077 3.278h3.023c.356 0 .698-.133.968-.376l.098-.096 7.35-7.887-3.608-3.87zm3.962-1.65a1.633 1.633 0 00-2.423 0l-.688.737 3.606 3.87.688-.737c.631-.678.666-1.755.105-2.477l-.105-.124-1.183-1.268z" />
+              <label className="_feed_textarea_label" htmlFor="postTextarea" style={{
+                position: 'absolute',
+                left: 12,
+                top: 12,
+                color: '#999',
+                fontSize: 'clamp(12px, 2vw, 13px)',
+                display: 'flex',
+                alignItems: 'center',
+                gap: 6,
+                pointerEvents: 'none',
+              }}>
+                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="none" viewBox="0 0 23 24">
+                  <path fill="#999" d="M19.504 19.209c.332 0 .601.289.601.646 0 .326-.226.596-.52.64l-.081.005h-6.276c-.332 0-.602-.289-.602-.645 0-.327.227-.597.52-.64l.082-.006h6.276zM13.4 4.417c1.139-1.223 2.986-1.223 4.125 0l1.182 1.268c1.14 1.223 1.14 3.205 0 4.427L9.82 19.649a2.619 2.619 0 01-1.916.85h-3.64c-.337 0-.61-.298-.6-.66l.09-3.941a3.019 3.019 0 01.794-1.982l8.852-9.5zm-.688 2.562l-7.313 7.85a1.68 1.68 0 00-.441 1.101l-.077 3.278h3.023c.356 0 .698-.133.968-.376l.098-.096 7.35-7.887-3.608-3.87zm3.962-1.65a1.633 1.633 0 00-2.423 0l-.688.737 3.606 3.87.688-.737c.631-.678.666-1.755.105-2.477l-.105-.124-1.183-1.268z" />
                 </svg>
+                Write something ...
               </label>
             )}
           </div>
