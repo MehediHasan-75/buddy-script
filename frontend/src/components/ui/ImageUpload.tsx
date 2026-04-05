@@ -64,7 +64,7 @@ export function ImageUpload({ onUpload, onClear, preview }: ImageUploadProps) {
       {preview ? (
         <div style={{ position: 'relative', display: 'inline-block' }}>
           {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img src={preview} alt="preview" style={{ maxHeight: 200, borderRadius: 8 }} />
+          <img src={preview} alt="preview" style={{ maxHeight: 100, borderRadius: 8 }} />
           <button
             type="button"
             onClick={() => { abortRef.current?.abort(); onClear(); }}
