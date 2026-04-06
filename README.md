@@ -11,7 +11,7 @@ A full-stack social media feed application built with **Next.js** and **Node.js/
 | # | Item | Link |
 |---|---|---|
 | 1 | GitHub Repository | https://github.com/MehediHasan-75/buddy-script |
-| 2 | Video Walkthrough (YouTube unlisted) | *(add YouTube URL)* — see [VIDEO_WALKTHROUGH.md](./VIDEO_WALKTHROUGH.md) for the recording script |
+| 2 | Video Walkthrough (YouTube unlisted) | https://youtu.be/o05-t06ytLE — see [VIDEO_WALKTHROUGH.md](./VIDEO_WALKTHROUGH.md) for the recording script |
 | 3 | Live Application | https://buddy-script-dusky.vercel.app/ |
 
 ---
