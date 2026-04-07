@@ -8,6 +8,21 @@ import { api } from '@/lib/api';
 import { setToken, setUser } from '@/lib/auth';
 import type { User } from '@/types';
 
+function getPasswordStrength(pwd: string): { score: number; label: string; color: string } {
+  const checks = [
+    pwd.length >= 8,
+    /[A-Z]/.test(pwd),
+    /[0-9]/.test(pwd),
+    /[^A-Za-z0-9]/.test(pwd),
+    pwd.length >= 12,
+  ];
+  const score = checks.filter(Boolean).length;
+  if (score <= 1) return { score, label: 'Weak', color: '#ff4d4f' };
+  if (score <= 3) return { score, label: 'Fair', color: '#faad14' };
+  if (score === 4) return { score, label: 'Good', color: '#52c41a' };
+  return { score, label: 'Strong', color: '#1677ff' };
+}
+
 export function RegisterForm() {
   const router = useRouter();
   const [firstName, setFirstName] = useState('');
@@ -17,6 +32,13 @@ export function RegisterForm() {
   const [repeatPassword, setRepeatPassword] = useState('');
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
+
+  const strength = password.length > 0 ? getPasswordStrength(password) : null;
+  const requirements = [
+    { label: 'At least 8 characters', met: password.length >= 8 },
+    { label: 'At least one uppercase letter', met: /[A-Z]/.test(password) },
+    { label: 'At least one number', met: /[0-9]/.test(password) },
+  ];
 
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
@@ -29,6 +51,12 @@ export function RegisterForm() {
 
     if (password !== repeatPassword) {
       setError('Passwords do not match.');
+      return;
+    }
+
+    const unmet = requirements.filter(r => !r.met);
+    if (unmet.length > 0) {
+      setError('Password does not meet requirements: ' + unmet.map(r => r.label.toLowerCase()).join(', ') + '.');
       return;
     }
 
@@ -173,6 +201,34 @@ export function RegisterForm() {
                           onChange={e => setPassword(e.target.value)}
                           required
                         />
+                        {strength && (
+                          <div style={{ marginTop: 8 }}>
+                            <div style={{ display: 'flex', gap: 4, marginBottom: 6 }}>
+                              {[1, 2, 3, 4, 5].map(i => (
+                                <div
+                                  key={i}
+                                  style={{
+                                    flex: 1,
+                                    height: 4,
+                                    borderRadius: 2,
+                                    backgroundColor: i <= strength.score ? strength.color : '#e8e8e8',
+                                    transition: 'background-color 0.2s',
+                                  }}
+                                />
+                              ))}
+                              <span style={{ fontSize: 12, color: strength.color, fontWeight: 600, whiteSpace: 'nowrap' }}>
+                                {strength.label}
+                              </span>
+                            </div>
+                            <ul style={{ listStyle: 'none', padding: 0, margin: 0 }}>
+                              {requirements.map(req => (
+                                <li key={req.label} style={{ fontSize: 12, color: req.met ? '#52c41a' : '#8c8c8c', display: 'flex', alignItems: 'center', gap: 4, marginBottom: 2 }}>
+                                  <span>{req.met ? '✓' : '○'}</span> {req.label}
+                                </li>
+                              ))}
+                            </ul>
+                          </div>
+                        )}
                       </div>
                     </div>
                     <div className="col-xl-12 col-lg-12 col-md-12 col-sm-12">
